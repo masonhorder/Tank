@@ -76,13 +76,13 @@ unsigned long lastConnection = 0;
 
 #define VBATPIN A7
 
-#define PWMA 13
-#define AIN2 12
-#define AIN1 11
-#define BIN1 10
-#define BIN2 9
+#define PWMA 19
+#define AIN2 13
+#define AIN1 16
+#define BIN1 17
+#define BIN2 18
 #define PWMB 6
-#define STBY A2
+#define STBY 15
 
 
 const int offsetA = 1;
@@ -91,8 +91,8 @@ const int offsetB = 1;
 int rightMotorDriveSpeed;
 int leftMotorDriveSpeed;
 
-Motor leftMotor = Motor(AIN1, AIN2, PWMA, offsetA, STBY);
-Motor rightMotor = Motor(BIN1, BIN2, PWMB, offsetB, STBY);
+Motor rightMotor = Motor(AIN1, AIN2, PWMA, offsetA, STBY);
+Motor leftMotor = Motor(BIN1, BIN2, PWMB, offsetB, STBY);
 
 
 int connectionStatus = 2;
@@ -222,7 +222,10 @@ void loop() {
       lastConnection = millis();
 
       leftMotorDriveSpeed = (rtdata[1]/200)*255;
-      rightMotorDriveSpeed = (rtdata[0]/200)*255;
+      rightMotorDriveSpeed = (rtdata[0]/200)*255*-1;
+      Serial.println(leftMotorDriveSpeed);
+      Serial.println(rightMotorDriveSpeed);
+
 
       leftMotor.drive(leftMotorDriveSpeed);
 
